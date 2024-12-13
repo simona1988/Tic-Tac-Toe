@@ -11,26 +11,27 @@ function renderGameBoard() {
     gameBoard.forEach((cell, index) => {
         const cellElement = document.createElement("div");
         cellElement.classList.add("cell");
-        if (cell) {
-            cellElement.textContent = cell;
-            cellElement.classList.add("disabled");
-        }
-        cellElement.addEventListener("click", () => handleCellClick(index));
+        cellElement.addEventListener("click", () => handleCellClick(index, cellElement));
         boardContainer.appendChild(cellElement);
     });
 }
 
-function handleCellClick(cellIndex) {
-    if (!(isGameActive && gameBoard[cellIndex] === null)) {
+function handleCellClick(cellIndex, cellElement) {
+    const isCellEmpty = gameBoard[cellIndex] === null;
+    const isAllowedToPlay = isGameActive && isCellEmpty;
+    if (!isAllowedToPlay) {
         return;
     }
     gameBoard[cellIndex] = currentPlayerSymbol;
-    renderGameBoard(); 
+    cellElement.textContent = currentPlayerSymbol;
+    cellElement.classList.add("disabled");
     if (checkForWinner()) {
         statusMessage.textContent = 'Player ' + currentPlayerSymbol + ' wins!';
         statusMessage.classList.replace("alert-info", "alert-success");
         isGameActive = false; 
-    } else if (gameBoard.every(function(cell) { return cell !== null; })) {
+    } else if (gameBoard.every(function(cell) { 
+        return cell !== null; 
+    })) {
         statusMessage.textContent = "Game over: It's a draw!";
         statusMessage.classList.replace("alert-info", "alert-warning");
         isGameActive = false; 

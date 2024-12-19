@@ -26,7 +26,7 @@ function handleCellClick(cellIndex, cellElement) {
     cellElement.textContent = currentPlayerSymbol;
     cellElement.classList.add("disabled");
     if (checkForWinner()) {
-        statusMessage.textContent = 'Player ' + currentPlayerSymbol + ' wins!';
+        statusMessage.textContent = `Player ${currentPlayerSymbol} wins!`;
         statusMessage.classList.replace("alert-info", "alert-success");
         isGameActive = false; 
     } else if (gameBoard.every(function(cell) { 
@@ -36,8 +36,12 @@ function handleCellClick(cellIndex, cellElement) {
         statusMessage.classList.replace("alert-info", "alert-warning");
         isGameActive = false; 
     } else {
-        currentPlayerSymbol = (currentPlayerSymbol === "X") ? "O" : "X";
-        statusMessage.textContent = "It's Player " + currentPlayerSymbol + "'s turn";
+        if (currentPlayerSymbol === "X")  {
+            currentPlayerSymbol = '0';
+        } else {
+            currentPlayerSymbol = 'X';
+        }
+        statusMessage.textContent = `It's Player ${currentPlayerSymbol}'s turn`;
     }
 }
 

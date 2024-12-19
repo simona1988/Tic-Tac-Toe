@@ -29,9 +29,7 @@ function handleCellClick(cellIndex, cellElement) {
         statusMessage.textContent = `Player ${currentPlayerSymbol} wins!`;
         statusMessage.classList.replace("alert-info", "alert-success");
         isGameActive = false; 
-    } else if (gameBoard.every(function(cell) { 
-        return cell !== null; 
-    })) {
+    } else if (gameBoard.every(cell => cell !== null)) {
         statusMessage.textContent = "Game over: It's a draw!";
         statusMessage.classList.replace("alert-info", "alert-warning");
         isGameActive = false; 

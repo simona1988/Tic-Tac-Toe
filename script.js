@@ -22,9 +22,22 @@ function handleCellClick(cellIndex, cellElement) {
     if (!isAllowedToPlay) {
         return;
     }
+    colorTheCell(cellIndex, cellElement);
+    checkGameStatus();
+}
+
+function colorTheCell(cellIndex, cellElement) {
     gameBoard[cellIndex] = currentPlayerSymbol;
     cellElement.textContent = currentPlayerSymbol;
     cellElement.classList.add("disabled");
+    if (currentPlayerSymbol === "X") {
+        cellElement.style.color = "green";
+    } else {
+        cellElement.style.color = "red";
+    }
+}
+
+function checkGameStatus() {
     if (checkForWinner()) {
         statusMessage.textContent = `Player ${currentPlayerSymbol} wins!`;
         statusMessage.classList.replace("alert-info", "alert-success");
